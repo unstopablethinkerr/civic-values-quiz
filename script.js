@@ -134,6 +134,40 @@ function checkAnswer(selectedOption, correctOption) {
     nextButton.style.display = 'inline-block';
 }
 
+function checkAnswer(selectedOption, correctOption) {
+    const optionsElement = document.getElementById('options');
+    const nextButton = document.getElementById('nextButton');
+    const buttons = optionsElement.getElementsByTagName('button');
+    const feedback = document.createElement('div');
+    feedback.style.marginTop = '10px';
+
+    for (let button of buttons) {
+        if (button.textContent === selectedOption) {
+            if (selectedOption === correctOption) {
+                button.classList.add('correct');
+                score++;
+                feedback.textContent = 'Correct!';
+                feedback.style.color = 'green';
+            } else {
+                button.classList.add('incorrect');
+                feedback.textContent = 'Incorrect, try again!';
+                feedback.style.color = 'red';
+            }
+        }
+        if (button.textContent === correctOption) {
+            button.classList.add('highlight');
+            setTimeout(() => button.classList.remove('highlight'), 3000);
+        }
+    }
+
+    optionsElement.appendChild(feedback);
+    setTimeout(() => optionsElement.removeChild(feedback), 2000);
+
+    nextButton.disabled = false;
+    nextButton.style.display = 'inline-block';
+}
+
+
 function nextQuestion() {
     currentQuestionIndex++;
     if (currentQuestionIndex < questions.length) {
