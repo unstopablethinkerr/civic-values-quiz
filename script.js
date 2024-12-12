@@ -1,43 +1,43 @@
  const questions = [
     {
         value: "Equality",
-        correct: "Parity"
+        synonyms: ["Parity", "Equivalence", "Fairness", "Evenness", "Balance"]
     },
     {
         value: "Liberty",
-        correct: "Freedom"
+        synonyms: ["Freedom", "Independence", "Autonomy", "Emancipation", "Self-determination"]
     },
     {
         value: "Fraternity",
-        correct: "Brotherhood"
+        synonyms: ["Brotherhood", "Solidarity", "Kinship", "Unity", "Fellowship"]
     },
     {
         value: "Freedom",
-        correct: "Liberty"
+        synonyms: ["Liberty", "Independence", "Autonomy", "Emancipation", "Self-determination"]
     },
     {
         value: "Justice",
-        correct: "Fairness"
+        synonyms: ["Fairness", "Equity", "Impartiality", "Righteousness", "Integrity"]
     },
     {
         value: "Pluralism",
-        correct: "Diversity"
+        synonyms: ["Diversity", "Variety", "Multiplicity", "Heterogeneity", "Eclecticism"]
     },
     {
         value: "Tolerance",
-        correct: "Acceptance"
+        synonyms: ["Acceptance", "Forbearance", "Patience", "Understanding", "Open-mindedness"]
     },
     {
         value: "Respect for All",
-        correct: "Reverence"
+        synonyms: ["Reverence", "Esteem", "Consideration", "Regard", "Honor"]
     },
     {
         value: "Freedom of Expression",
-        correct: "Free Speech"
+        synonyms: ["Free Speech", "Right to Speak", "Open Communication", "Uncensored Expression", "Liberty to Voice Opinions"]
     },
     {
         value: "Citizen Participation in Governance",
-        correct: "Civic Engagement"
+        synonyms: ["Civic Engagement", "Public Involvement", "Democratic Participation", "Community Involvement", "Political Engagement"]
     }
 ];
 
@@ -89,17 +89,19 @@ function loadQuestion() {
     const scoreElement = document.getElementById('score');
 
     const currentQuestion = questions[currentQuestionIndex];
+    const randomSynonymIndex = Math.floor(Math.random() * currentQuestion.synonyms.length);
+    const correctOption = currentQuestion.synonyms[randomSynonymIndex];
     questionElement.textContent = `What is a synonym for ${currentQuestion.value}?`;
     optionsElement.innerHTML = '';
 
-    const randomOptions = getRandomOptions(currentQuestion.correct);
-    const allOptions = [currentQuestion.correct, ...randomOptions];
+    const randomOptions = getRandomOptions(correctOption);
+    const allOptions = [correctOption, ...randomOptions];
     shuffleArray(allOptions);
 
     allOptions.forEach((option) => {
         const button = document.createElement('button');
         button.textContent = option;
-        button.addEventListener('click', () => checkAnswer(option, currentQuestion.correct));
+        button.addEventListener('click', () => checkAnswer(option, correctOption));
         optionsElement.appendChild(button);
     });
 
