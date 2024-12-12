@@ -1,4 +1,4 @@
- const questions = [
+const questions = [
     {
         value: "Equality",
         synonyms: ["Parity", "Equivalence", "Fairness", "Evenness", "Balance"]
@@ -68,7 +68,7 @@ function getRandomOptions(correctOption) {
     const options = [];
     while (options.length < 2) {
         const randomWord = wordList[Math.floor(Math.random() * wordList.length)];
-        if (randomWord !== correctOption && !options.includes(randomWord)) {
+        if (randomWord !== correctOption && !options.includes(randomWord) && randomWord !== questions[currentQuestionIndex].value) {
             options.push(randomWord);
         }
     }
