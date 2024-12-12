@@ -1,58 +1,79 @@
  const questions = [
     {
         value: "Equality",
-        options: ["Parity", "Hierarchy", "Supremacy", "Equivalence"],
         correct: "Parity"
     },
     {
         value: "Liberty",
-        options: ["Freedom", "Restriction", "Control", "Independence"],
         correct: "Freedom"
     },
     {
         value: "Fraternity",
-        options: ["Brotherhood", "Isolation", "Rivalry", "Solidarity"],
         correct: "Brotherhood"
     },
     {
         value: "Freedom",
-        options: ["Liberty", "Confinement", "Oppression", "Autonomy"],
         correct: "Liberty"
     },
     {
         value: "Justice",
-        options: ["Fairness", "Injustice", "Bias", "Equity"],
         correct: "Fairness"
     },
     {
         value: "Pluralism",
-        options: ["Diversity", "Uniformity", "Conformity", "Variety"],
         correct: "Diversity"
     },
     {
         value: "Tolerance",
-        options: ["Acceptance", "Intolerance", "Rejection", "Patience"],
         correct: "Acceptance"
     },
     {
         value: "Respect for All",
-        options: ["Reverence", "Disdain", "Contempt", "Esteem"],
         correct: "Reverence"
     },
     {
         value: "Freedom of Expression",
-        options: ["Free Speech", "Censorship", "Silence", "Open Communication"],
         correct: "Free Speech"
     },
     {
         value: "Citizen Participation in Governance",
-        options: ["Civic Engagement", "Apathy", "Exclusion", "Public Involvement"],
         correct: "Civic Engagement"
     }
 ];
 
+const wordList = [
+    "Liberty", "Fraternity", "Freedom", "Justice", "Pluralism", "Tolerance", "Respect",
+    "Expression", "Participation", "Democracy", "Rights", "Fairness", "Diversity",
+    "Inclusion", "Empowerment", "Autonomy", "Independence", "Solidarity", "Unity",
+    "Harmony", "Equity", "Impartiality", "Integrity", "Honesty", "Transparency",
+    "Accountability", "Openness", "Accessibility", "Representation", "Voice",
+    "Choice", "Consent", "Dissent", "Dialogue", "Debate", "Negotiation", "Compromise",
+    "Cooperation", "Collaboration", "Community", "Citizenship", "Governance", "Law",
+    "Order", "Peace", "Security", "Stability", "Prosperity", "Welfare", "Well-being",
+    "Happiness", "Contentment", "Satisfaction", "Fulfillment", "Self-determination",
+    "Self-expression", "Self-realization", "Self-actualization", "Self-respect",
+    "Dignity", "Honor", "Pride", "Confidence", "Trust", "Faith", "Hope", "Optimism",
+    "Resilience", "Perseverance", "Courage", "Bravery", "Valor", "Fortitude",
+    "Endurance", "Patience", "Forgiveness", "Compassion", "Empathy", "Kindness",
+    "Generosity", "Charity", "Altruism", "Benevolence", "Goodwill", "Amity",
+    "Friendship", "Camaraderie", "Fellowship", "Brotherhood", "Sisterhood",
+    "Kinship", "Belonging", "Acceptance", "Understanding", "Wisdom", "Knowledge",
+    "Education", "Learning", "Growth"
+];
+
 let currentQuestionIndex = 0;
 let score = 0;
+
+function getRandomOptions(correctOption) {
+    const options = [];
+    while (options.length < 2) {
+        const randomWord = wordList[Math.floor(Math.random() * wordList.length)];
+        if (randomWord !== correctOption && !options.includes(randomWord)) {
+            options.push(randomWord);
+        }
+    }
+    return options;
+}
 
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -71,9 +92,11 @@ function loadQuestion() {
     questionElement.textContent = `What is a synonym for ${currentQuestion.value}?`;
     optionsElement.innerHTML = '';
 
-    shuffleArray(currentQuestion.options);
+    const randomOptions = getRandomOptions(currentQuestion.correct);
+    const allOptions = [currentQuestion.correct, ...randomOptions];
+    shuffleArray(allOptions);
 
-    currentQuestion.options.forEach((option, index) => {
+    allOptions.forEach((option) => {
         const button = document.createElement('button');
         button.textContent = option;
         button.addEventListener('click', () => checkAnswer(option, currentQuestion.correct));
